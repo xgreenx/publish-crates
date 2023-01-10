@@ -1,4 +1,4 @@
-import {dirname, join, normalize} from 'path'
+import {dirname, join} from 'path'
 import {spawnSync} from 'child_process'
 
 import {GitHubHandle, lastCommitDate} from './github'
@@ -198,9 +198,7 @@ export async function checkPackages(
                         message: `Package '${package_name}' dependes from internal '${dependency_name}' which is not a workspace member. Listed workspace members only will be published`
                     })
                 }
-                const dependency_path = normalize(
-                    join(package_info.path, dependency.path)
-                )
+                const dependency_path = dependency.path
                 if (dependency_path !== dependency_package.path) {
                     errors.push({
                         kind: 'mismatch-intern-dep-path',
