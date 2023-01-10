@@ -1,5 +1,5 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
-[![CI Status](https://github.com/katyo/publish-crates/workflows/build-test/badge.svg)](https://github.com/katyo/publish-crates/actions)
+[![CI Status](https://github.com/xgreenx/publish-crates/workflows/build-test/badge.svg)](https://github.com/katyo/publish-crates/actions)
 
 # Publish Rust crates using GitHub Actions
 
@@ -57,7 +57,7 @@ steps:
       with:
           toolchain: stable
           override: true
-    - uses: katyo/publish-crates@v1
+    - uses: xgreenx/publish-crates@v1
       with:
           registry-token: ${{ secrets.CARGO_REGISTRY_TOKEN }}
 ```
@@ -71,7 +71,7 @@ steps:
       with:
           toolchain: stable
           override: true
-    - uses: katyo/publish-crates@v1
+    - uses: xgreenx/publish-crates@v1
       with:
           path: './packages'
           args: --no-verify
@@ -87,7 +87,7 @@ steps:
       with:
           toolchain: stable
           override: true
-    - uses: katyo/publish-crates@v1
+    - uses: xgreenx/publish-crates@v1
       with:
           dry-run: true
           check-repo: ${{ github.event_name == 'push' }}
@@ -102,7 +102,7 @@ steps:
       with:
           toolchain: stable
           override: true
-    - uses: katyo/publish-crates@v1
+    - uses: xgreenx/publish-crates@v1
       with:
           registry-token: ${{ secrets.CARGO_REGISTRY_TOKEN }}
           ignore-unpublished-changes: true
