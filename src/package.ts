@@ -12,7 +12,7 @@ interface RawDependencies {
     path?: string
 }
 
-interface TOML {
+interface Metadata {
     packages: [RawManifest]
 }
 
@@ -75,15 +75,15 @@ export async function findPackages(
     }
     const output = exec.stdout.toString(`utf8`)
 
-    let toml: TOML
+    let metadata: Metadata
 
     try {
-        toml = JSON.parse(output)
+        metadata = JSON.parse(output)
     } catch (error) {
         throw new Error(`Error when parsing manifest file '${path}' (${error})`)
     }
 
-    for (const package_info of toml.packages) {
+    for (const package_info of metadata.packages) {
         if (typeof package_info.name !== 'string') {
             throw new Error(`Missing package name at '${path}'`)
         }
@@ -101,7 +101,7 @@ export async function findPackages(
                 }
 
                 if (
-                    dependency.kind &&
+                    !!dependency.kind &&
                     dependency.kind === `dev` &&
                     !dependency.path
                 ) {
