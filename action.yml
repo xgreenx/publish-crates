@@ -1,6 +1,6 @@
 name: 'publish crates'
 description: 'Publish Rust crates on crates.io'
-author: 'K. <kayo@illumium.org>'
+author: 'Green <xgreenx9999@gmail.com>'
 branding:
   icon: box
   color: orange
