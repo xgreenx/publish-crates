@@ -100,16 +100,6 @@ export async function findPackages(
                     continue
                 }
 
-                if (
-                    !!dependency.kind &&
-                    dependency.kind === `dev` &&
-                    !dependency.path
-                ) {
-                    throw new Error(
-                        `Missing dependency '${dependency.name}' path field`
-                    )
-                }
-
                 dependencies[dependency.name] = {
                     req: dependency.req,
                     path: dependency.path
