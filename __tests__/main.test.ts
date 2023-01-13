@@ -49,10 +49,10 @@ test('sort packages', async () => {
     expect(sorted).toEqual([
         'pkg-sys',
         'pkg-lib',
+        'pkg-build',
         'subcrate-d',
         'subcrate-f',
         'subcrate-e',
-        'pkg-build',
         'pkg-dev',
         'pkg-bin',
         'pkg-all'

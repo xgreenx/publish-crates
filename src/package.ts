@@ -20,7 +20,7 @@ interface RawManifest {
     name?: string
     manifest_path: string
     version?: string
-    publish?: boolean
+    publish?: [string]
     dependencies: [RawDependencies]
 }
 
@@ -90,19 +90,39 @@ export async function findPackages(
         if (typeof package_info.version !== 'string') {
             throw new Error(`Missing package version at '${path}'`)
         }
-        if (package_info.publish !== false) {
+        // List of registries to which this package may be published.
+        // Publishing is unrestricted if null, and forbidden if an empty array.
+        if (!package_info.publish || package_info.publish.length > 0) {
             const dependencies: Dependencies = {}
 
             for (const dependency of package_info.dependencies) {
-                // Dependencies without a version requirement have a value of "*"
-                // and doesn't affect publishing, so skip them.
-                if (dependency.req === '*') {
-                    continue
-                }
+                const no_version = dependency.req === '*';
+                const kind = dependency.kind;
+                const name = dependency.name;
 
-                dependencies[dependency.name] = {
-                    req: dependency.req,
-                    path: dependency.path
+                if (
+                    no_version &&
+                    // normal and build deps require a version
+                    kind !== 'dev'
+                ) {
+                    throw new Error(
+                        `Missing dependency '${name}' version field`
+                    )
+                } else if (
+                    // throw an error if there is no path or version on dev-dependencies
+                    kind === 'dev' &&
+                    no_version &&
+                    !dependency.path
+                ) {
+                    throw new Error(
+                        `Missing dependency '${name}' version field`
+                    )
+                } else if (!no_version) {
+                    // only include package in dependency graph if version is specified
+                    dependencies[dependency.name] = {
+                        req: dependency.req,
+                        path: dependency.path
+                    }
                 }
             }
 

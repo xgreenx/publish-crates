@@ -1,6 +1,7 @@
 [workspace]
 members = [
   "pkg-sys",
+  "pkg-skip",
   "pkg-build",
   "pkg-lib",
   "pkg-bin",
