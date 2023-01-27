@@ -227,6 +227,7 @@ export async function checkPackages(
                         kind: 'not-a-workspace-member',
                         message: `Package '${package_name}' dependes from internal '${dependency_name}' which is not a workspace member. Listed workspace members only will be published`
                     })
+                    continue
                 }
                 const dependency_path = normalize(
                     join(package_info.path, dependency.path)
